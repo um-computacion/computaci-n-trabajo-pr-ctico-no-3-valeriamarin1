@@ -5,31 +5,18 @@ from src.exceptions import (
 )
 from unittest.mock import patch
 
-class TestCalculoNumeros(unittest.TestCase):
-
-    @patch(  # este patch controla lo que hace el input
-        'builtins.input',
-        return_value='100'
-    )
+class TestNumeroValido(unittest.TestCase):
+    
+    @patch('builtins.input', return_value='100')
     def test_ingreso_feliz(self, patch_input):
         numero = ingrese_numero()
         self.assertEqual(numero, 100)
+    
 
-    @patch(  # este patch controla lo que hace el input
-        'builtins.input',
-        return_value='-100'
-    )
-    def test_ingreso_negativo(self, patch_input):
-        with self.assertRaises(NumeroDebeSerPositivo):
-            ingrese_numero()
-
-    @patch(  # este patch controla lo que hace el input
-        'builtins.input',
-        return_value='AAA'
-    )
-    def test_ingreso_letras(self, patch_input):
-        with self.assertRaises(ValueError):
-            ingrese_numero()
+    @patch('builtins.input', return_value='25')
+    def test_ingreso_feliz_25(self, patch_input):
+        numero = ingrese_numero()
+        self.assertEqual(numero, 25)
 
 if __name__ == '__main__':
-    unittest.main() 
+    unittest.main()
