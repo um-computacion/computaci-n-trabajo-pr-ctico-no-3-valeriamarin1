@@ -24,6 +24,31 @@ class TestNumeroValido(unittest.TestCase):
         with self.assertRaises(NumeroDebeSerPositivo) as contexto:
             ingrese_numero()
         self.assertEqual(str(contexto.exception), 'El número debe ser positivo')
+    
+    @patch(  # Este patch controla lo que hace el input
+        'builtins.input',
+        return_value='AAA'  # Simula que el usuario ingresa 'AAA'
+    )
+    def test_ingreso_letras(self, patch_input):
+        with self.assertRaises(ValueError):
+            ingrese_numero()
+
+  
+    @patch(  # Este patch controla lo que hace el input
+        'builtins.input',
+        return_value='123abc'  # Simula que el usuario ingresa '123abc'
+    )
+    def test_ingreso_numero_con_letras(self, patch_input):
+        with self.assertRaises(ValueError):
+            ingrese_numero()
+
+    @patch(  # Este patch controla lo que hace el input
+        'builtins.input',
+        return_value='!@#'  # Simula que el usuario ingresa caracteres especiales
+    )
+    def test_ingreso_caracteres_especiales(self, patch_input):
+        with self.assertRaises(ValueError):
+            ingrese_numero()
 
 if __name__ == '__main__':
     unittest.main()
